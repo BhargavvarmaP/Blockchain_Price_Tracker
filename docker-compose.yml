@@ -1,0 +1,18 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: blockchain_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - '5432:5432'
+  nestjs:
+    build: .
+    environment:
+      DATABASE_URL: postgres://postgres:admin@postgres:5432/blockchain_db
+    depends_on:
+      - postgres
+    ports:
+      - '8080:8080'
